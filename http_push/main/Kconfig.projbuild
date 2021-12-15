@@ -1,0 +1,56 @@
+menu "HTTP push example"
+
+	choice
+		prompt "Base/Source"
+		help
+			This is the base partition or file that is used when creating the patch.
+			Typically this is the ota_1 partition, but can also be set to a file on
+			a filesystem.
+
+		config SRC_PARTITION
+			bool "Partition"
+
+		config SRC_FILE
+			bool "File"
+
+		config SRC_FILENAME
+			string "Filename"
+			default "/spiffs/base.bin"
+			depends on SRC_FILE
+	endchoice
+
+	choice
+		prompt "Updated/Destination"
+		help
+			This is the new partition or file where the applied base plus patch will be
+			written to.
+
+		config DEST_PARTITION
+			bool "Partition"
+
+		config DEST_FILE
+			bool "File"
+
+		config DEST_FILENAME
+			string "Filename"
+			default "/spiffs/updated.bin"
+			depends on DEST_FILE
+	endchoice
+
+	choice
+		prompt "Delta/Patch"
+		help
+			This is the partition or file where the delta will be saved to prior to application.
+
+		config PATCH_PARTITION
+			bool "Partition"
+
+		config PATCH_FILE
+			bool "File"
+
+		config PATCH_FILENAME
+			string "Filename"
+			default "/spiffs/patch.bin"
+			depends on PATCH_FILE
+	endchoice
+endmenu
